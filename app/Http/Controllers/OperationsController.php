@@ -9,7 +9,3 @@ class OperationsController extends Controller
         return $a + $b;
     }
 }
-
-
-
-

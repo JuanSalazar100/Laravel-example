@@ -22,7 +22,7 @@ class ExampleTest extends TestCase
         $this->assertNotNull($result);
         $this->assertGreaterThan(5, $result);
     }
-    
+
     public function test_int_negative_adittion(): void
     {
         $controller = new OperationsController;

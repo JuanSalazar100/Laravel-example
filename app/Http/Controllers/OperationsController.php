@@ -14,7 +14,7 @@ class OperationsController extends Controller
     /**
      * Procesa una orden calculando subtotal, IVA, descuento y total.
      *
-     * @param array<int, array{price: float|int, quantity: float|int}> $items
+     * @param array<int, array{price: mixed, quantity: mixed}> $items
      * @return array{
      *     subtotal: float,
      *     tax: float,

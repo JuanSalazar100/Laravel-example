@@ -14,7 +14,7 @@ class OperationsController extends Controller
     /**
      * Procesa una orden calculando subtotal, IVA, descuento y total.
      *
-     * @param array<int, array{price: mixed, quantity: mixed}> $items
+     * @param  array<int, array{price: mixed, quantity: mixed}>  $items
      * @return array{
      *     subtotal: float,
      *     tax: float,
@@ -26,7 +26,7 @@ class OperationsController extends Controller
     public function processOrder(array $items, ?float $discount = null): array
     {
         if ($items === []) {
-            throw new InvalidArgumentException("La lista de items no puede estar vacía.");
+            throw new InvalidArgumentException('La lista de items no puede estar vacía.');
         }
 
         $subtotal = 0.0;
@@ -34,16 +34,16 @@ class OperationsController extends Controller
 
         foreach ($items as $item) {
             // Validación de tipo a runtime
-            if (!is_numeric($item["price"]) || !is_numeric($item["quantity"])) {
-                throw new InvalidArgumentException("price y quantity deben ser numéricos.");
+            if (! is_numeric($item['price']) || ! is_numeric($item['quantity'])) {
+                throw new InvalidArgumentException('price y quantity deben ser numéricos.');
             }
 
             // Conversión segura a float/int
-            $price = (float) $item["price"];
-            $quantity = (float) $item["quantity"];
+            $price = (float) $item['price'];
+            $quantity = (float) $item['quantity'];
 
             if ($price < 0 || $quantity <= 0) {
-                throw new InvalidArgumentException("Valores inválidos: price o quantity.");
+                throw new InvalidArgumentException('Valores inválidos: price o quantity.');
             }
 
             $subtotal += $price * $quantity;
@@ -55,7 +55,7 @@ class OperationsController extends Controller
         $discountAmount = 0.0;
         if ($discount !== null) {
             if ($discount < 0 || $discount > 100) {
-                throw new InvalidArgumentException("El descuento debe estar entre 0 y 100.");
+                throw new InvalidArgumentException('El descuento debe estar entre 0 y 100.');
             }
             $discountAmount = $subtotal * ($discount / 100);
         }
@@ -63,11 +63,11 @@ class OperationsController extends Controller
         $total = $subtotal + $tax - $discountAmount;
 
         return [
-            "subtotal" => round($subtotal, 2),
-            "tax" => round($tax, 2),
-            "discount" => round($discountAmount, 2),
-            "total" => round($total, 2),
-            "items_count" => $itemsCount,
+            'subtotal' => round($subtotal, 2),
+            'tax' => round($tax, 2),
+            'discount' => round($discountAmount, 2),
+            'total' => round($total, 2),
+            'items_count' => $itemsCount,
         ];
     }
 }

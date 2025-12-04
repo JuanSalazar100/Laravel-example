@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use InvalidArgumentException;
 
+use InvalidArgumentException;
 
 class OperationsController extends Controller
 {
@@ -12,50 +12,52 @@ class OperationsController extends Controller
     }
 
     /**
-     * FUNCIÓN DIONICIO
      * Procesa una orden calculando subtotal, IVA, descuento y total.
      *
-     * @param array $items Lista de productos con price y quantity
-     * @param float|null $discount Porcentaje de descuento (0 - 100)
-     * @return array
+     * @param array<int, array{price: float|int, quantity: float|int}> $items
+     * @return array{
+     *     subtotal: float,
+     *     tax: float,
+     *     discount: float,
+     *     total: float,
+     *     items_count: int
+     * }
      */
     public function processOrder(array $items, ?float $discount = null): array
     {
-        if (empty($items)) {
+        if ($items === []) {
             throw new InvalidArgumentException("La lista de items no puede estar vacía.");
         }
 
-        $subtotal = 0;
+        $subtotal = 0.0;
         $itemsCount = 0;
 
         foreach ($items as $item) {
-            if (!isset($item["price"]) || !isset($item["quantity"])) {
-                throw new InvalidArgumentException("Cada item debe incluir price y quantity.");
-            }
-
+            // Validación de tipo a runtime
             if (!is_numeric($item["price"]) || !is_numeric($item["quantity"])) {
                 throw new InvalidArgumentException("price y quantity deben ser numéricos.");
             }
 
-            if ($item["price"] < 0 || $item["quantity"] <= 0) {
+            // Conversión segura a float/int
+            $price = (float) $item["price"];
+            $quantity = (float) $item["quantity"];
+
+            if ($price < 0 || $quantity <= 0) {
                 throw new InvalidArgumentException("Valores inválidos: price o quantity.");
             }
 
-            $subtotal += $item["price"] * $item["quantity"];
-            $itemsCount += $item["quantity"];
+            $subtotal += $price * $quantity;
+            $itemsCount += (int) $quantity;
         }
 
-        // IVA del 16%
         $tax = $subtotal * 0.16;
 
-        // Descuento opcional
+        $discountAmount = 0.0;
         if ($discount !== null) {
             if ($discount < 0 || $discount > 100) {
                 throw new InvalidArgumentException("El descuento debe estar entre 0 y 100.");
             }
             $discountAmount = $subtotal * ($discount / 100);
-        } else {
-            $discountAmount = 0;
         }
 
         $total = $subtotal + $tax - $discountAmount;
@@ -65,9 +67,7 @@ class OperationsController extends Controller
             "tax" => round($tax, 2),
             "discount" => round($discountAmount, 2),
             "total" => round($total, 2),
-            "items_count" => $itemsCount
+            "items_count" => $itemsCount,
         ];
     }
-
-
 }

@@ -125,4 +125,65 @@ class OperationsController extends Controller
             'effective_annual_rate' => round($effectiveAnnualRate, 2),
         ];
     }
+
+    /**
+     * Convierte una cantidad de una moneda a otra aplicando comisión.
+     *
+     * @param  float   $amount        Cantidad a convertir (debe ser mayor a 0).
+     * @param  string  $fromCurrency Moneda origen (USD, MXN, EUR).
+     * @param  string  $toCurrency   Moneda destino (USD, MXN, EUR).
+     * @param  float   $commission   Comisión en porcentaje (0 a 10).
+     *
+     * @return array{
+     *   original_amount: float,
+     *   converted_amount: float,
+     *   commission_amount: float,
+     *   final_amount: float,
+     *   rate_used: float
+     * }
+     */
+    public function convertCurrency(
+        float $amount,
+        string $fromCurrency,
+        string $toCurrency,
+        float $commission = 0
+    ): array {
+        if ($amount <= 0) {
+            throw new InvalidArgumentException('La cantidad debe ser mayor a 0.');
+        }
+
+        if ($commission < 0 || $commission > 10) {
+            throw new InvalidArgumentException('La comisión debe estar entre 0% y 10%.');
+        }
+
+        $rates = [
+            'USD' => 1.0,
+            'MXN' => 17.0,
+            'EUR' => 0.92,
+        ];
+
+        if (! isset($rates[$fromCurrency], $rates[$toCurrency])) {
+            throw new InvalidArgumentException('Moneda no válida.');
+        }
+
+        // Conversión a USD como base
+        $amountInUSD = $amount / $rates[$fromCurrency];
+
+        // Conversión a moneda destino
+        $convertedAmount = $amountInUSD * $rates[$toCurrency];
+
+        // Comisión
+        $commissionAmount = $convertedAmount * ($commission / 100);
+
+        $finalAmount = $convertedAmount - $commissionAmount;
+
+        return [
+            'original_amount'   => round($amount, 2),
+            'converted_amount' => round($convertedAmount, 2),
+            'commission_amount'=> round($commissionAmount, 2),
+            'final_amount'     => round($finalAmount, 2),
+            'rate_used'        => round($rates[$toCurrency], 4),
+        ];
+    }
+
 }

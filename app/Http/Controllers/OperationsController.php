@@ -129,11 +129,10 @@ class OperationsController extends Controller
     /**
      * Convierte una cantidad de una moneda a otra aplicando comisión.
      *
-     * @param  float   $amount        Cantidad a convertir (debe ser mayor a 0).
-     * @param  string  $fromCurrency Moneda origen (USD, MXN, EUR).
-     * @param  string  $toCurrency   Moneda destino (USD, MXN, EUR).
-     * @param  float   $commission   Comisión en porcentaje (0 a 10).
-     *
+     * @param  float  $amount  Cantidad a convertir (debe ser mayor a 0).
+     * @param  string  $fromCurrency  Moneda origen (USD, MXN, EUR).
+     * @param  string  $toCurrency  Moneda destino (USD, MXN, EUR).
+     * @param  float  $commission  Comisión en porcentaje (0 a 10).
      * @return array{
      *   original_amount: float,
      *   converted_amount: float,
@@ -178,12 +177,11 @@ class OperationsController extends Controller
         $finalAmount = $convertedAmount - $commissionAmount;
 
         return [
-            'original_amount'   => round($amount, 2),
+            'original_amount' => round($amount, 2),
             'converted_amount' => round($convertedAmount, 2),
-            'commission_amount'=> round($commissionAmount, 2),
-            'final_amount'     => round($finalAmount, 2),
-            'rate_used'        => round($rates[$toCurrency], 4),
+            'commission_amount' => round($commissionAmount, 2),
+            'final_amount' => round($finalAmount, 2),
+            'rate_used' => round($rates[$toCurrency], 4),
         ];
     }
-
 }

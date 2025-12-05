@@ -10,7 +10,7 @@ class CalculateLoanSummaryTest extends TestCase
 {
     public function test_calculate_loan_summary_with_valid_data(): void
     {
-        $controller = new OperationsController();
+        $controller = new OperationsController;
 
         $result = $controller->calculateLoanSummary(10000.0, 12.0, 12);
 
@@ -23,7 +23,7 @@ class CalculateLoanSummaryTest extends TestCase
 
     public function test_calculate_loan_summary_fails_with_zero_principal(): void
     {
-        $controller = new OperationsController();
+        $controller = new OperationsController;
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('El monto del préstamo debe ser mayor que 0.');
@@ -33,7 +33,7 @@ class CalculateLoanSummaryTest extends TestCase
 
     public function test_calculate_loan_summary_fails_with_negative_rate(): void
     {
-        $controller = new OperationsController();
+        $controller = new OperationsController;
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('La tasa anual no puede ser negativa.');
@@ -43,7 +43,7 @@ class CalculateLoanSummaryTest extends TestCase
 
     public function test_calculate_loan_summary_fails_with_invalid_months(): void
     {
-        $controller = new OperationsController();
+        $controller = new OperationsController;
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('El número de meses debe ser mayor que 0.');

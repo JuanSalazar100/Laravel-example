@@ -71,13 +71,12 @@ class OperationsController extends Controller
         ];
     }
 
-        /**
+    /**
      * Calcula el resumen de un préstamo con pagos mensuales fijos.
      *
-     * @param  float  $principal   Monto del préstamo (debe ser mayor que 0).
+     * @param  float  $principal  Monto del préstamo (debe ser mayor que 0).
      * @param  float  $annualRate  Tasa de interés anual en porcentaje (ej. 12.5 para 12.5%).
-     * @param  int    $months      Plazo del préstamo en meses (debe ser mayor que 0).
-     *
+     * @param  int  $months  Plazo del préstamo en meses (debe ser mayor que 0).
      * @return array{
      *     monthly_payment: float,
      *     total_interest: float,
@@ -120,11 +119,10 @@ class OperationsController extends Controller
         }
 
         return [
-            'monthly_payment'       => round($monthlyPayment, 2),
-            'total_interest'        => round($totalInterest, 2),
-            'total_paid'            => round($totalPaid, 2),
+            'monthly_payment' => round($monthlyPayment, 2),
+            'total_interest' => round($totalInterest, 2),
+            'total_paid' => round($totalPaid, 2),
             'effective_annual_rate' => round($effectiveAnnualRate, 2),
         ];
     }
-
 }

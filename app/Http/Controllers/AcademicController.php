@@ -6,6 +6,10 @@ use InvalidArgumentException;
 
 class AcademicController extends Controller
 {
+    /**
+     * @param  array<int, array{grade: mixed, credits: mixed}>  $courses
+     * @return array{weighted_average: float, total_credits: int, total_courses: int, status: string, performance_percentage: float}
+     */
     public function calculateWeightedGrade(array $courses, float $maxGrade = 100.0): array
     {
         if ($courses === []) {
@@ -43,7 +47,7 @@ class AcademicController extends Controller
             $totalCredits += $credits;
         }
 
-        $weightedAverage = $totalCredits > 0 ? $totalWeightedGrade / $totalCredits : 0.0;
+        $weightedAverage = $totalWeightedGrade / $totalCredits;
         $performancePercentage = ($weightedAverage / $maxGrade) * 100;
 
         $status = match (true) {

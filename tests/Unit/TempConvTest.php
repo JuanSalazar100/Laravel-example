@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use App\Http\Controllers\OperationsController;
+use PHPUnit\Framework\TestCase;
 
 class TempConvTest extends TestCase
 {
     public function test_convert_celsius_to_fahrenheit()
     {
-        $controller = new OperationsController();
+        $controller = new OperationsController;
 
         $result = $controller->convertTemperature(0, 'c_to_f');
 
@@ -18,7 +18,7 @@ class TempConvTest extends TestCase
 
     public function test_convert_fahrenheit_to_celsius()
     {
-        $controller = new OperationsController();
+        $controller = new OperationsController;
 
         $result = $controller->convertTemperature(32, 'f_to_c');
 
@@ -29,7 +29,7 @@ class TempConvTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $controller = new OperationsController();
+        $controller = new OperationsController;
 
         $controller->convertTemperature(100, 'xyz');
     }

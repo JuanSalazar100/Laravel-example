@@ -30,7 +30,7 @@ class OrderControllerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $controller = new OrderController();
+        $controller = new OrderController;
         $controller->processOrder([]);
     }
 
@@ -38,7 +38,7 @@ class OrderControllerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $controller = new OrderController();
+        $controller = new OrderController;
 
         $items = [
             ['price' => -100, 'quantity' => 2],

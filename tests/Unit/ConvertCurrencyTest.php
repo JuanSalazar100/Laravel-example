@@ -24,7 +24,7 @@ class ConvertCurrencyTest extends TestCase
 
     public function test_convert_currency_mxn_to_usd_sin_comision(): void
     {
-        $controller = new OperationsController;
+        $controller = new CurrencyController;
 
         $result = $controller->convertCurrency(1700, 'MXN', 'USD', 0);
 
@@ -35,7 +35,7 @@ class ConvertCurrencyTest extends TestCase
 
     public function test_convert_currency_eur_to_usd(): void
     {
-        $controller = new OperationsController;
+        $controller = new CurrencyController;
 
         $result = $controller->convertCurrency(92, 'EUR', 'USD');
 
@@ -47,7 +47,7 @@ class ConvertCurrencyTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $controller = new OperationsController;
+        $controller = new CurrencyController;
         $controller->convertCurrency(0, 'USD', 'MXN');
     }
 
@@ -55,7 +55,7 @@ class ConvertCurrencyTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $controller = new OperationsController;
+        $controller = new CurrencyController;
         $controller->convertCurrency(100, 'USD', 'MXN', 20);
     }
 
@@ -63,7 +63,7 @@ class ConvertCurrencyTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $controller = new OperationsController;
+        $controller = new CurrencyController;
         $controller->convertCurrency(100, 'USD', 'JPY');
     }
 }

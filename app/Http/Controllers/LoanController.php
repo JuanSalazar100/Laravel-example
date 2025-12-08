@@ -11,7 +11,7 @@ class LoanController extends Controller
      *
      * @param  float  $principal  Monto del préstamo.
      * @param  float  $annualRate  Tasa anual en porcentaje.
-     * @param  int    $months  Plazo en meses.
+     * @param  int  $months  Plazo en meses.
      * @return array{
      *   monthly_payment: float,
      *   total_interest: float,

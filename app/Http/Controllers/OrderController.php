@@ -10,7 +10,6 @@ class OrderController extends Controller
      * Procesa una orden calculando subtotal, IVA, descuento y total.
      *
      * @param  array<int, array{price: float|int|string, quantity: float|int|string}>  $items
-     * @param  float|null  $discount
      * @return array{
      *   subtotal: float,
      *   tax: float,

@@ -7,7 +7,13 @@ use InvalidArgumentException;
 class CurrencyController extends Controller
 {
     /**
-     * Convierte una cantidad de una moneda a otra aplicando comisión.
+     * @return array{
+     *  original_amount: float,
+     *  converted_amount: float,
+     *  commission_amount: float,
+     *  final_amount: float,
+     *  rate_used: float
+     * }
      */
     public function convertCurrency(
         float $amount,
@@ -36,9 +42,15 @@ class CurrencyController extends Controller
             throw new InvalidArgumentException('Moneda no válida.');
         }
 
+        // Conversión a USD como base
         $amountInUSD = $amount / $rates[$fromCurrency];
+
+        // Conversión a moneda destino
         $convertedAmount = $amountInUSD * $rates[$toCurrency];
+
+        // Comisión
         $commissionAmount = $convertedAmount * ($commission / 100);
+
         $finalAmount = $convertedAmount - $commissionAmount;
 
         return [

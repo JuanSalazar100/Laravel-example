@@ -8,9 +8,22 @@ class LoanController extends Controller
 {
     /**
      * Calcula el resumen financiero de un préstamo.
+     *
+     * @param  float  $principal  Monto del préstamo.
+     * @param  float  $annualRate  Tasa anual en porcentaje.
+     * @param  int    $months  Plazo en meses.
+     * @return array{
+     *   monthly_payment: float,
+     *   total_interest: float,
+     *   total_paid: float,
+     *   effective_annual_rate: float
+     * }
      */
-    public function calculateLoanSummary(float $principal, float $annualRate, int $months): array
-    {
+    public function calculateLoanSummary(
+        float $principal,
+        float $annualRate,
+        int $months
+    ): array {
         if ($principal <= 0) {
             throw new InvalidArgumentException('El monto del préstamo debe ser mayor que 0.');
         }

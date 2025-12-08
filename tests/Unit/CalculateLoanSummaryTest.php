@@ -2,15 +2,15 @@
 
 namespace Tests\Unit;
 
-use App\Http\Controllers\OperationsController;
+use App\Http\Controllers\LoanController;
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class CalculateLoanSummaryTest extends TestCase
 {
     public function test_calculate_loan_summary_with_valid_data(): void
     {
-        $controller = new OperationsController;
+        $controller = new LoanController;
 
         $result = $controller->calculateLoanSummary(10000.0, 12.0, 12);
 

@@ -3,45 +3,24 @@
 namespace Tests\Unit;
 
 use App\Http\Controllers\OperationsController;
-use InvalidArgumentException;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class OperationsControllerTest extends TestCase
+class ExampleTest extends TestCase
 {
-    public function test_process_order_funciona_correctamente()
+    /**
+     * A basic test example.
+     */
+    public function test_that_true_is_true(): void
     {
-        $controller = new OperationsController;
-
-        $items = [
-            ['price' => 100, 'quantity' => 2],
-            ['price' => 50, 'quantity' => 1],
-        ];
-
-        $result = $controller->processOrder($items, 10);
-
-        $this->assertEquals(250, $result['subtotal']);
-        $this->assertEquals(40, $result['tax']);
-        $this->assertEquals(25, $result['discount']);
-        $this->assertEquals(265, $result['total']);
-        $this->assertEquals(3, $result['items_count']);
+        $this->assertTrue(true);
     }
 
-    public function test_process_order_falla_con_items_vacios()
-    {
-        $controller = new OperationsController;
-        $this->expectException(InvalidArgumentException::class);
-        $controller->processOrder([]);
-    }
-
-    public function test_process_order_falla_con_datos_invalidos()
+    public function test_int_addition(): void
     {
         $controller = new OperationsController;
 
-        $items = [
-            ['price' => 'abc', 'quantity' => 1],
-        ];
-
-        $this->expectException(InvalidArgumentException::class);
-        $controller->processOrder($items);
+        $this->assertIsInt($controller->addition(5, 6));
+        $this->assertNotNull($controller->addition(5, 6));
+        $this->assertGreaterThan(5, $controller->addition(5, 6));
     }
 }

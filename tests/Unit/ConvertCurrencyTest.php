@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\OperationsController;
+use App\Http\Controllers\CurrencyController;
 use InvalidArgumentException;
 use Tests\TestCase;
 
@@ -10,7 +10,7 @@ class ConvertCurrencyTest extends TestCase
 {
     public function test_convert_currency_usd_to_mxn_con_comision(): void
     {
-        $controller = new OperationsController;
+        $controller = new CurrencyController;
 
         // 100 USD a MXN con 5% de comisión
         $result = $controller->convertCurrency(100, 'USD', 'MXN', 5);
